@@ -1,6 +1,6 @@
 html, body {
     margin: 0;
-    padding: 5;
+    padding: 0;
     height: 100%;
     width: 100%;
     display: flex;
@@ -8,9 +8,9 @@ html, body {
     align-items: center;     /* Center vertically */
   }
      
-#map {
+  #map {
     width: 100%;    /* Adjust width to your desired size */
-    height: 100%;   /* Adjust height to your desired size */
+    height: calc(100vh - 4rem); /* Adjust height to fill the viewport minus header height */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for effect */
     border-radius: 8px; /* Optional: rounded corners */
 }
@@ -25,13 +25,56 @@ html, body {
     pointer-events: none
 }
 
-#map circle {
-    fill: steelblue;         /* Sets a nice blue color for the circles */
+
+#map circle,
+  .legend > div {
     fill-opacity: 0.6;       /* Adjust transparency for better visibility */
     stroke: white;           /* White outline for better contrast */
     pointer-events: auto;    /* Ensures tooltips and interactions work */
+    --color-departures: rgb(0, 140, 255);
+    --color-arrivals: rgb(255, 0, 157);
+    --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+    );
+    fill: var(--color);
 }
 
 #map circle:hover {
-    fill-opacity: 1; /* Full opacity on hover */
+    fill-opacity: 1;
 }
+
+
+  /* Legend styles */
+  .legend {
+    display: flex;
+    align-items: center;
+    gap: 1rem;           /* Larger gap between legend items */
+    margin-block: 1rem;  /* Spacing from the map */
+  }
+  
+  .legend::before {
+    content: "Legend:";
+    margin-inline-end: 0.5rem; /* Space after the label */
+    font-weight: bold;
+  }
+  
+  /* Each legend item also uses flex to keep the swatch and text close */
+  .legend > div {
+    display: flex;
+    gap: 0.25rem; /* Smaller gap between swatch and text than between items */
+    align-items: center;
+    /* Inherit the --color variable and use it for the swatch in ::before */
+  }
+  
+  /* Create the colored swatch using ::before */
+  .legend > div::before {
+    content: "";
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;    /* Make it circular; remove if you want a square */
+    background-color: var(--color);
+  }
+

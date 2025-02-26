@@ -2,11 +2,10 @@ body {
   font: 100%/1.5 system-ui, sans-serif;
   display: flex;
   flex-flow: column;
-  max-width: 80em;
   min-height: 100vh;
   box-sizing: border-box;
-  margin: auto;
-  padding: 1em;
+  margin: 0;
+  padding-top: 4rem;
 }
 
 header {
@@ -34,12 +33,14 @@ label {
 }
 
 time {
-  display: center;
+  display: block; /* Makes it a block element */
+  text-align: left; /* Centers the text */
   font-weight: bold;
 }
 
 #any-time {
   display: block;
+  text-align: right;
   font-style: italic;
   color: gray;
 }
